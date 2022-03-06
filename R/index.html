@@ -1,0 +1,309 @@
+<style>
+
+    @keyframes shake {
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        10% { transform: translate(-1px, -2px) rotate(-1deg); }
+        20% { transform: translate(-3px, 0px) rotate(1deg); }
+        30% { transform: translate(3px, 2px) rotate(0deg); }
+        40% { transform: translate(1px, -1px) rotate(1deg); }
+        50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        60% { transform: translate(-3px, 1px) rotate(0deg); }
+        70% { transform: translate(3px, 1px) rotate(-1deg); }
+        80% { transform: translate(-1px, -1px) rotate(1deg); }
+        90% { transform: translate(1px, 2px) rotate(0deg); }
+        100% { transform: translate(1px, -2px) rotate(-1deg); }
+    }
+    
+    .colors {cursor: url(./paintbrush.png), crosshair;}
+
+    .container {
+        position: relative;
+        right: "30px";
+    }
+    
+    .container:hover .image {
+        opacity: 0.3;
+    }
+    
+    .image {
+        opacity: 1;
+        display: block;
+        width: 100%;
+        height: auto;
+        transition: .5s ease;
+        backface-visibility: hidden;
+    } 
+    
+    .rcorners {
+            border-radius: 5px;
+            border: .5px solid #292827;
+            padding: 13px; 
+            width: 400px;
+            height: 50px;
+            font-size: small;
+    }
+</style>
+<p style="font-size:small"><b>Clipboard:</b></p>
+<textarea ondrop = "dropped(event)" ondragover="allowDrop(event)" class = "rcorners" id = "clipboard_details"></textarea>
+<br>
+<br>
+<div class = container>
+    <img class = image id = eraser src="eraser.png" alt="eraser" style="width:32px;height:32px;margin-left:6px;">
+</div>
+<br>
+<input class = "colors" id = color_one type="color", value="#0000ff" draggable="true" ondragstart="onDragStart(event);">
+<button id = color_one_add type="button">&#43;</button>
+<br>
+<input class = "colors" id = color_two type="color", value="#000000" draggable="true" ondragstart="onDragStart(event);"> 
+<button id = color_two_add type="button">&#43;</button>
+<br>
+<input class = "colors" id = color_three type="color", value="#a52a2a" draggable="true" ondragstart="onDragStart(event);">
+<button id = color_three_add type="button">&#43;</button>
+<br>
+<input class = "colors" id = color_four type="color", value="#00FF00" draggable="true" ondragstart="onDragStart(event);">
+<button id = color_four_add type="button">&#43;</button>
+<br>
+<input class = "colors" id = color_five type="color", value="#ffa500" draggable="true" ondragstart="onDragStart(event);">
+<button id = color_five_add type="button">&#43;</button>
+<br>
+<input class = "colors" id = color_six type="color", value="#ff0000" draggable="true" ondragstart="onDragStart(event);">
+<button id = color_six_add type="button">&#43;</button>
+<br>
+<input class = "colors" id = color_seven type="color", value="#9932CC" draggable="true" ondragstart="onDragStart(event);">
+<button id = color_seven_add type="button">&#43;</button>
+<br>
+<input class = "colors" id = color_eight type="color", value="#FFFF00" draggable="true" ondragstart="onDragStart(event);">
+<button id = color_eight_add type="button">&#43;</button>
+<br>
+
+<script>
+    var eraser = document.getElementById("eraser")
+    var colorone = document.getElementById("color_one")
+    var colortwo = document.getElementById("color_two") 
+    var colorthree = document.getElementById("color_three")
+    var colorfour = document.getElementById("color_four") 
+    var colorfive = document.getElementById("color_five") 
+    var colorsix = document.getElementById("color_six") 
+    var colorseven = document.getElementById("color_seven") 
+    var coloreight = document.getElementById("color_eight") 
+
+    var color_one_add = document.getElementById("color_one_add") 
+    var color_two_add = document.getElementById("color_two_add") 
+    var color_three_add = document.getElementById("color_three_add") 
+    var color_four_add = document.getElementById("color_four_add") 
+    var color_five_add = document.getElementById("color_five_add") 
+    var color_six_add = document.getElementById("color_six_add") 
+    var color_seven_add = document.getElementById("color_seven_add") 
+    var color_eight_add = document.getElementById("color_eight_add") 
+
+    var clipboard_text = ""
+    var elements = 0
+
+    var drag_data = ""
+
+    var colors = {
+                    pallete: {
+                        1: colorone.value,
+                        2: colortwo.value,
+                        3: colorthree.value,
+                        4: colorfour.value,
+                        5: colorfive.value,
+                        6: colorsix.value,
+                        7: colorseven.value,
+                        8: coloreight.value
+                    },
+                    change: -1
+                }
+
+    function onDragStart(event) {
+        if(elements === 0) {
+            //document.getElementById("clipboard_details").value = " "
+            drag_data = event.target.value
+            event
+                .dataTransfer
+                .setData("Text", event.target.value);
+        } else if(elements === 1) {
+           // document.getElementById("clipboard_details").value = " "
+            drag_data = "c(" + clipboard_text +  ", \"" + event.target.value + "\")"
+
+            event
+                .dataTransfer
+                .setData("Text", "c(" + clipboard_text +  ", \"" + event.target.value + "\")");
+        } else {
+            drag_data = clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + event.target.value + "\")"
+            //document.getElementById("clipboard_details").value = " "
+            event
+                .dataTransfer
+                .setData("Text", clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + event.target.value + "\")");
+        }
+    }
+
+    function allowDrop(event) {
+        event.preventDefault()
+    }
+
+    function dropped(event) {
+        console.log(drag_data)
+        document.getElementById("clipboard_details").value = drag_data
+        clipboard_text = drag_data
+        elements += 1
+        copyTextToClipboard(drag_data)
+        drag_data = ""
+    }
+
+    function fallbackCopyTextToClipboard(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+
+        // Avoid scrolling to bottom
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log(text)
+            console.log('Fallback: Copying text command was ' + msg);
+        } catch (err) {
+            console.log(text)
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    const copyTextToClipboard = (text) => {
+        //if (!navigator.clipboard) {
+        fallbackCopyTextToClipboard(text);
+        return;
+        //}
+
+        /*navigator.clipboard.writeText(text).then(function() {
+            alert("Copied")
+            console.log(text)
+            console.log('Async: Copying to clipboard was successful!');
+        }, function(err) {
+            alert("Not copied")
+            console.log(text)
+            console.error('Async: Could not copy text: ', err);
+        });*/
+    }
+
+    const triggerchange = (color) => {
+        console.log(clipboard_text)
+        console.log(elements)
+        if(elements >= 1) {
+            
+            if(elements === 1) {
+                copyTextToClipboard("c(" + clipboard_text +  ", \"" + color + "\")")
+                clipboard_text = "c(" + clipboard_text +  ", \"" + color + "\")"
+                document.getElementById("clipboard_details").value= clipboard_text
+                elements += 1
+            } else {
+                copyTextToClipboard(clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + color + "\")")
+                clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + color + "\")"
+                document.getElementById("clipboard_details").value = clipboard_text
+                elements += 1
+            }
+
+        } else {
+            copyTextToClipboard("\"" + color + "\"");
+            clipboard_text = "\"" + color + "\""
+            document.getElementById("clipboard_details").value = clipboard_text
+            elements = 1
+        }
+        console.log(clipboard_text)
+        //document.execCommand("paste")
+        //Tried pasting
+    }
+
+    eraser.addEventListener("click", function(event) {
+        console.log("Erasing data in clipboard")
+        copyTextToClipboard(" ")
+        clipboard_text = " "
+        document.getElementById("clipboard_details").value = " "
+        console.log(document.getElementById("clipboard_details").value)
+        elements = 0
+    })
+
+
+    colorone.addEventListener("input", function(event) {
+        colors.pallete[1] = colorone.value
+        colors.change = 1
+        triggerchange(colorone.value)
+    })
+    colortwo.addEventListener("input", function(event) {
+        colors.pallete[2] = colortwo.value
+        colors.change = 2
+        triggerchange(colortwo.value)
+    })
+    colorthree.addEventListener("input", function(event) {
+        colors.pallete[3] = colorthree.value
+        colors.change = 3
+        triggerchange(colorthree.value)
+    })
+    colorfour.addEventListener("input", function(event) {
+        colors.pallete[4] = colorfour.value
+        colors.change = 4
+        triggerchange(colorfour.value)
+    })
+    colorfive.addEventListener("input", function(event) {
+        colors.pallete[5] = colorfive.value
+        colors.change = 5
+        triggerchange(colorfive.value)
+    })
+    colorsix.addEventListener("input", function(event) {
+        colors.pallete[6] = colorsix.value
+        colors.change = 6
+        triggerchange(colorsix.value)
+    })
+    colorseven.addEventListener("input", function(event) {
+        colors.pallete[7] = colorseven.value
+        colors.change = 7
+        triggerchange(colorseven.value)
+    })
+    coloreight.addEventListener("input", function(event) {
+        colors.pallete[8] = coloreight.value
+        colors.change = 8
+        triggerchange(coloreight.value)
+    })
+
+
+
+
+    color_one_add.addEventListener("click", function(event) {
+        triggerchange(colorone.value)
+    })
+
+    color_two_add.addEventListener("click", function(event) {
+        triggerchange(colortwo.value)
+    })
+
+    color_three_add.addEventListener("click", function(event) {
+        triggerchange(colorthree.value)
+    })
+
+    color_four_add.addEventListener("click", function(event) {
+        triggerchange(colorfour.value)
+    })
+
+    color_five_add.addEventListener("click", function(event) {
+        triggerchange(colorfive.value)
+    })
+
+    color_six_add.addEventListener("click", function(event) {
+        triggerchange(colorsix.value)
+    })
+    color_seven_add.addEventListener("click", function(event) {
+        triggerchange(colorseven.value)
+    })
+
+    color_eight_add.addEventListener("click", function(event) {
+        triggerchange(coloreight.value)
+    })
+</script>
