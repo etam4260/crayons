@@ -406,23 +406,37 @@
         color_button.classList.remove('highlight');
         rgb_button.classList.remove('highlight');
         console.log(prev_selected_color)
-        console.log(elements)
-        if(prev_selected_color === "COLOR") {
-            if(elements === 1) {
-                document.getElementById("clipboard_details").value = convertColor("HEX", document.getElementById("clipboard_details").value)
-            } else {
-                text = document.getElementById("clipboard_details").value
-                value = text.split(",")
-                value[0] = value[0].substring(2, value[0].length)
-                value[value.length-1] = value[value.length-1].substring(0, value[value.length-1].length-1)
-                console.log(value)
-                
-            }
-        } else if(prev_selected_color === "RGB") {
-            if(elements === 1) {
-                document.getElementById("clipboard_details").value = convertRGB("HEX", untrun_rgb)
-            } else {
-                
+        if(clipboard_text.length != 1 && clipboard_text.length != 0) {
+            if(prev_selected_color === "COLOR") {
+                if(elements === 1) {
+                    document.getElementById("clipboard_details").value = convertColor("HEX", document.getElementById("clipboard_details").value)
+                } else {
+                    text = document.getElementById("clipboard_details").value
+                    value = text.split(",")
+                    value[0] = value[0].substring(2, value[0].length)
+                    value[value.length-1] = value[value.length-1].substring(0, value[value.length-1].length - 1)
+    
+                    for (let i = 0; i < value.length; i++) {
+                        value[i] = value[i].substring(1, value[i].length - 1)
+                    }
+                    console.log(value)
+                    value = value.map(function(v) { return "\"" + convertColor("HEX", v) + "\""})
+                    document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                }
+            } else if(prev_selected_color === "RGB") {
+                if(elements === 1) {
+                    document.getElementById("clipboard_details").value = convertRGB("HEX", untrun_rgb)
+                } else {
+                    text = document.getElementById("clipboard_details").value
+                    value = text.split("rgb")
+                    value.shift()
+                    for (let i = 0; i < value.length; i++) {
+                        value[i] = "rgb(" + value[i].substring(1, value[i].length - 1)
+                    }
+                    console.log(value)
+                    value = value.map(function(v) { return "\"" + convertRGB("HEX", v) + "\""})
+                    document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                }
             }
         }
     })
@@ -434,21 +448,37 @@
         hex_button.classList.remove('highlight');
         color_button.classList.add('highlight');
         rgb_button.classList.remove('highlight');
-        if(prev_selected_color === "HEX") {
-            if(elements === 1) {
+        if(clipboard_text.length != 1 && clipboard_text.length != 0) {
+            if(prev_selected_color === "HEX") {
                 if(elements === 1) {
-                    document.getElementById("clipboard_details").value = convertRGB("COLOR", convertHex("RGB",  document.getElementById("clipboard_details").value))
+                    document.getElementById("clipboard_details").value = "\"" + convertRGB("COLOR", convertHex("RGB",  document.getElementById("clipboard_details").value)) + "\""
                 } else {
-
+                    text = document.getElementById("clipboard_details").value
+                    value = text.split(",")
+                    value[0] = value[0].substring(2, value[0].length)
+                    value[value.length-1] = value[value.length-1].substring(1, value[value.length-1].length - 1)
+    
+                    for (let i = 0; i < value.length; i++) {
+                        value[i] = value[i].substring(1, value[i].length - 1)
+                    }
+                    value = value.map(function(v) { return "\"" + convertRGB("COLOR", convertHex("RGB",  v)) + "\""})
+                    console.log(value)
+                    document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
                 }
-            } else {
-                
-            }
-        } else if(prev_selected_color === "RGB") {
-            if(elements === 1) {
-                document.getElementById("clipboard_details").value = threeDimensionalEuclideanDistance(document.getElementById("clipboard_details").value)
-            } else {
-                
+            } else if(prev_selected_color === "RGB") {
+                if(elements === 1) {
+                    document.getElementById("clipboard_details").value = threeDimensionalEuclideanDistance(document.getElementById("clipboard_details").value)
+                } else {
+                    text = document.getElementById("clipboard_details").value
+                    value = text.split("rgb")
+                    value.shift()
+                    for (let i = 0; i < value.length; i++) {
+                        value[i] = "rgb(" + value[i].substring(1, value[i].length - 1)
+                    }
+                    console.log(value)
+                    value = value.map(function(v) { return "\"" + convertRGB("COLOR", v) + "\""})
+                    document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                }
             }
         }
     })
@@ -460,17 +490,39 @@
         hex_button.classList.remove('highlight');
         color_button.classList.remove('highlight');
         rgb_button.classList.add('highlight');
-        if(prev_selected_color === "COLOR") {
-            if(elements === 1) {
-                document.getElementById("clipboard_details").value = convertColor("RGB", document.getElementById("clipboard_details").value)
-            } else {
-                
-            }
-        } else if(prev_selected_color === "HEX") {
-            if(elements === 1) {
-                document.getElementById("clipboard_details").value = convertHex("RGB", document.getElementById("clipboard_details").value)
-            } else {
-               
+        if(clipboard_text.length != 1 && clipboard_text.length != 0) {
+            if(prev_selected_color === "COLOR") {
+                if(elements === 1) {
+                    document.getElementById("clipboard_details").value = convertColor("RGB", document.getElementById("clipboard_details").value.substring(1, document.getElementById("clipboard_details").value.length-1))
+                } else {
+                    text = document.getElementById("clipboard_details").value
+                    value = text.split(",")
+                    value[0] = value[0].substring(2, value[0].length)
+                    value[value.length-1] = value[value.length-1].substring(0, value[value.length-1].length - 1)
+    
+                    for (let i = 0; i < value.length; i++) {
+                        value[i] = value[i].substring(1, value[i].length - 1)
+                    }
+                    console.log(value)
+                    value = value.map(function(v) { return convertColor("RGB", v)})
+                    document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                }
+            } else if(prev_selected_color === "HEX") {
+                if(elements === 1) {
+                    document.getElementById("clipboard_details").value = convertHex("RGB", document.getElementById("clipboard_details").value)
+                } else {
+                    text = document.getElementById("clipboard_details").value
+                    value = text.split(",")
+                    value[0] = value[0].substring(2, value[0].length)
+                    value[value.length-1] = value[value.length-1].substring(0, value[value.length-1].length - 1)
+    
+                    for (let i = 0; i < value.length; i++) {
+                        value[i] = value[i].substring(1, value[i].length - 1)
+                    }
+                    console.log(value)
+                    value = value.map(function(v) { return convertHex("RGB", v)})
+                    document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                }
             }
         }
     })
@@ -532,7 +584,7 @@
     // Hex -> [Other]
     function convertHex(conversion, value) {
         if(conversion === "COLOR") {
-
+            return convertRGB("COLOR", convertHex("RGB", value))
         } else if(conversion === "RGB") {
             var value = value.match(/[A-Za-z0-9]{2}/g);
             // ["XX", "XX", "XX"] -> [n, n, n]
@@ -548,8 +600,11 @@
     // Color -> [Other]
     function convertColor(conversion, value) {
         if(conversion === "HEX") {
+            console.log("converting hex")
+            console.log(value)
             for (let i = 0; i < name_hex_rgb.length; i++) {
                 if(name_hex_rgb[i][0] === value) {
+                    console.log(name_hex_rgb[i][1])
                     return(name_hex_rgb[i][1].toLowerCase())
                 }
             }
@@ -573,11 +628,11 @@
         } else if(conversion === "HEX") {
             var value = value.split(",")
             console.log(value)
-            red = parseFloat(value[0].substring(4, value[0].length)) * 256
+            red = parseFloat(value[0].substring(4, value[0].length)) * 255
             console.log(parseFloat(value[0].substring(4, 8)))
-            green = parseFloat(value[1]) * 256
-            blue = parseFloat(value[2].substring(0, value[2].length - 1)) * 256
-            
+            green = parseFloat(value[1]) * 255
+            blue = parseFloat(value[2].substring(0, value[2].length - 1)) * 255
+
             console.log(red)
             console.log(green)
             console.log(blue)
@@ -676,20 +731,35 @@
         if(elements >= 1) {
             
             if(elements === 1) {
-                copyTextToClipboard("c(" + clipboard_text +  ", \"" + color + "\")")
-                clipboard_text = "c(" + clipboard_text +  ", \"" + color + "\")"
+                if(selected_color_encoding != "RGB") {
+                    copyTextToClipboard("c(" + clipboard_text +  ", \"" + color + "\")")
+                    clipboard_text = "c(" + clipboard_text +  ", \"" + color + "\")"
+                } else {
+                    copyTextToClipboard("c(" + clipboard_text +  "," + color + ")")
+                    clipboard_text = "c(" + clipboard_text +  "," + color + ")"
+                }
                 document.getElementById("clipboard_details").value= clipboard_text
                 elements += 1
             } else {
-                copyTextToClipboard(clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + color + "\")")
-                clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + color + "\")"
+                if(selected_color_encoding != "RGB") {
+                    copyTextToClipboard(clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + color + "\")")
+                    clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + color + "\")"
+                } else {
+                    copyTextToClipboard(clipboard_text.substring(0, clipboard_text.length - 1) + "," + color + ")")
+                    clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + "," + color + ")"
+                }
                 document.getElementById("clipboard_details").value = clipboard_text
                 elements += 1
             }
 
         } else {
-            copyTextToClipboard("\"" + color + "\"");
-            clipboard_text = "\"" + color + "\""
+            if(selected_color_encoding != "RGB") {
+                copyTextToClipboard("\"" + color + "\"");
+                clipboard_text = "\"" + color + "\""
+            } else {
+                copyTextToClipboard(color);
+                clipboard_text = color 
+            }
             document.getElementById("clipboard_details").value = clipboard_text
             elements = 1
         }
@@ -723,7 +793,13 @@
         document.getElementById("color_one_rgb").value = convertHex("RGB", colorone.value)
         document.getElementById("color_one_color").value = convertRGB("COLOR", convertHex("RGB", colorone.value))
         colors.change = 1
-        triggerchange(colorone.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorone.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorone.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorone.value))
+        }
     })
     colortwo.addEventListener("input", function(event) {
         colors.pallete[2] = colortwo.value
@@ -731,7 +807,13 @@
         document.getElementById("color_two_rgb").value = convertHex("RGB", colortwo.value)
         document.getElementById("color_two_color").value = convertRGB("COLOR", convertHex("RGB", colortwo.value))
         colors.change = 2
-        triggerchange(colortwo.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colortwo.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colortwo.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colortwo.value))
+        }
     })
     colorthree.addEventListener("input", function(event) {
         colors.pallete[3] = colorthree.value
@@ -739,7 +821,13 @@
         document.getElementById("color_three_rgb").value = convertHex("RGB", colorthree.value)
         document.getElementById("color_three_color").value = convertRGB("COLOR", convertHex("RGB", colorthree.value))
         colors.change = 3
-        triggerchange(colorthree.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorthree.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorthree.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorthree.value))
+        }
     })
     colorfour.addEventListener("input", function(event) {
         colors.pallete[4] = colorfour.value
@@ -747,7 +835,13 @@
         document.getElementById("color_four_rgb").value = convertHex("RGB", colorfour.value)
         document.getElementById("color_four_color").value = convertRGB("COLOR", convertHex("RGB", colorfour.value))
         colors.change = 4
-        triggerchange(colorfour.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorfour.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorfour.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorfour.value))
+        }
     })
     colorfive.addEventListener("input", function(event) {
         colors.pallete[5] = colorfive.value
@@ -755,7 +849,13 @@
         document.getElementById("color_five_rgb").value = convertHex("RGB", colorfive.value)
         document.getElementById("color_five_color").value = convertRGB("COLOR", convertHex("RGB", colorfive.value))
         colors.change = 5
-        triggerchange(colorfive.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorfive.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorfive.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorfive.value))
+        }
     })
     colorsix.addEventListener("input", function(event) {
         colors.pallete[6] = colorsix.value
@@ -763,7 +863,13 @@
         document.getElementById("color_six_rgb").value = convertHex("RGB", colorsix.value)
         document.getElementById("color_six_color").value = convertRGB("COLOR", convertHex("RGB", colorsix.value))
         colors.change = 6
-        triggerchange(colorsix.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorsix.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorsix.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorsix.value))
+        }
     })
     colorseven.addEventListener("input", function(event) {
         colors.pallete[7] = colorseven.value
@@ -771,7 +877,13 @@
         document.getElementById("color_seven_rgb").innerHTML = convertHex("RGB", colorseven.value)
         document.getElementById("color_seven_color").innerHTML = convertRGB("COLOR", convertHex("RGB", colorseven.value))
         colors.change = 7
-        triggerchange(colorseven.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorseven.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorseven.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorseven.value))
+        }
     })
     coloreight.addEventListener("input", function(event) {
         colors.pallete[8] = coloreight.value
@@ -779,40 +891,95 @@
         document.getElementById("color_eight_rgb").value = convertHex("RGB", coloreight.value)
         document.getElementById("color_eight_color").value = convertRGB("COLOR", convertHex("RGB", coloreight.value))
         colors.change = 8
-        triggerchange(coloreight.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(coloreight.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", coloreight.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", coloreight.value))
+        }
     })
 
 
 
 
     color_one_add.addEventListener("click", function(event) {
-        triggerchange(colorone.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorone.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorone.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorone.value))
+        }
+     
     })
 
     color_two_add.addEventListener("click", function(event) {
-        triggerchange(colortwo.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colortwo.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colortwo.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colortwo.value))
+        }
     })
 
     color_three_add.addEventListener("click", function(event) {
-        triggerchange(colorthree.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorthree.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorthree.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorthree.value))
+        }
     })
 
     color_four_add.addEventListener("click", function(event) {
-        triggerchange(colorfour.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorfour.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorfour.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorfour.value))
+        }
     })
 
     color_five_add.addEventListener("click", function(event) {
-        triggerchange(colorfive.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorfive.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorfive.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorfive.value))
+        }
     })
 
     color_six_add.addEventListener("click", function(event) {
-        triggerchange(colorsix.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorsix.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorsix.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorsix.value))
+        }
     })
     color_seven_add.addEventListener("click", function(event) {
-        triggerchange(colorseven.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(colorseven.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", colorseven.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", colorseven.value))
+        }
     })
 
     color_eight_add.addEventListener("click", function(event) {
-        triggerchange(coloreight.value)
+        if(selected_color_encoding === "HEX") {
+            triggerchange(coloreight.value)
+        } else if(selected_color_encoding === "COLOR") {
+            triggerchange(convertHex("COLOR", coloreight.value))
+        } else if(selected_color_encoding === "RGB"){
+            triggerchange(convertHex("RGB", coloreight.value))
+        }
     })
 </script>
