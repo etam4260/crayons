@@ -13,6 +13,17 @@
         90% { transform: translate(1px, 2px) rotate(0deg); }
         100% { transform: translate(1px, -2px) rotate(-1deg); }
     }
+
+
+    .box{
+        height: 17.75px;
+        border: .25px solid black;
+        margin: 0;
+        padding: 0;
+        margin-right: -4;
+        background-color: white;
+        display: inline-block;
+    }
     
     .colors {cursor: url(paintbrush.png), crosshair;}
 
@@ -71,11 +82,32 @@
     <button class = encoding id = color type="button">COLOR</button>
     <button class = encoding id = rgb type="button">RGB</button>
 </div>
-
+<br>
+<div>
+    <span class="box" id="box_one" style="width:447.5"></span>
+    <span class="box" id="box_two"></span>
+    <span class="box" id="box_three"></span>
+    <span class="box" id="box_four"></span>
+    <span class="box" id="box_five"></span>
+    <span class="box" id="box_six"></span>
+    <span class="box" id="box_seven"></span>
+    <span class="box" id="box_eight"></span>
+    <span class="box" id="box_nine"></span>
+    <span class="box" id="box_ten"></span>
+    <span class="box" id="box_eleven"></span>
+    <span class="box" id="box_twelve"></span>
+    <span class="box" id="box_thirteen"></span>
+    <span class="box" id="box_thirteen"></span>
+    <span class="box" id="box_fourteen"></span>
+    <span class="box" id="box_fiftheen"></span>
+    <span class="box" id="box_sixteen"></span>
+    <span class="box" id="box_seventeen"></span>
+    <span class="box" id="box_eighteen"></span>
+</div>
 <textarea ondrop = "dropped(event)" ondragover="allowDrop(event)" class = "rcorners" id = "clipboard_details"></textarea>
 <br><br>
 <div class = container>
-    <img class = image id = eraser draggable="true" ondragstart="onEraseDrag(event);" src="eraser.png" alt="eraser" style="width:50;height:50px;margin-left:12px;">
+    <img class = image id = eraser draggable="true" ondragstart="onEraseDrag(event);" src="eraser.png" alt="eraser" style="width:25;height:25px;margin-left:12px;">
 </div>
 <button id = color_one_add type="button">&#43;</button>
 <textarea class = "color_label" id = color_one_hex>Text</textarea>
@@ -157,6 +189,10 @@
 
     var drag_data = ""
     var eraser_dragging = false
+
+    var untrun_rgb = ""
+
+    var MAX_BOXES = 18
 
     var prev_events = []
 
@@ -369,8 +405,26 @@
         hex_button.classList.add('highlight');
         color_button.classList.remove('highlight');
         rgb_button.classList.remove('highlight');
-
-
+        console.log(prev_selected_color)
+        console.log(elements)
+        if(prev_selected_color === "COLOR") {
+            if(elements === 1) {
+                document.getElementById("clipboard_details").value = convertColor("HEX", document.getElementById("clipboard_details").value)
+            } else {
+                text = document.getElementById("clipboard_details").value
+                value = text.split(",")
+                value[0] = value[0].substring(2, value[0].length)
+                value[value.length-1] = value[value.length-1].substring(0, value[value.length-1].length-1)
+                console.log(value)
+                
+            }
+        } else if(prev_selected_color === "RGB") {
+            if(elements === 1) {
+                document.getElementById("clipboard_details").value = convertRGB("HEX", untrun_rgb)
+            } else {
+                
+            }
+        }
     })
 
     
@@ -380,6 +434,23 @@
         hex_button.classList.remove('highlight');
         color_button.classList.add('highlight');
         rgb_button.classList.remove('highlight');
+        if(prev_selected_color === "HEX") {
+            if(elements === 1) {
+                if(elements === 1) {
+                    document.getElementById("clipboard_details").value = convertRGB("COLOR", convertHex("RGB",  document.getElementById("clipboard_details").value))
+                } else {
+
+                }
+            } else {
+                
+            }
+        } else if(prev_selected_color === "RGB") {
+            if(elements === 1) {
+                document.getElementById("clipboard_details").value = threeDimensionalEuclideanDistance(document.getElementById("clipboard_details").value)
+            } else {
+                
+            }
+        }
     })
 
 
@@ -389,8 +460,22 @@
         hex_button.classList.remove('highlight');
         color_button.classList.remove('highlight');
         rgb_button.classList.add('highlight');
+        if(prev_selected_color === "COLOR") {
+            if(elements === 1) {
+                document.getElementById("clipboard_details").value = convertColor("RGB", document.getElementById("clipboard_details").value)
+            } else {
+                
+            }
+        } else if(prev_selected_color === "HEX") {
+            if(elements === 1) {
+                document.getElementById("clipboard_details").value = convertHex("RGB", document.getElementById("clipboard_details").value)
+            } else {
+               
+            }
+        }
     })
 
+    // The function is mainly used to find the closest colored name to this RGB value.
     function threeDimensionalEuclideanDistance(rgb) {
         var value = rgb.split(",")
         console.log(value)
@@ -449,36 +534,36 @@
         if(conversion === "COLOR") {
 
         } else if(conversion === "RGB") {
-            console.log(value)
             var value = value.match(/[A-Za-z0-9]{2}/g);
-            console.log(value)
             // ["XX", "XX", "XX"] -> [n, n, n]
+            untrun_rgb = value.map(function(v) { return (parseInt(v, 16)/256)});
+            untrun_rgb = "rgb(" + untrun_rgb.join(",") + ")"
             value = value.map(function(v) { return (parseInt(v, 16)/256).toFixed(2) });
 
             // [n, n, n] -> rgb(n,n,n)
             return "rgb(" + value.join(",") + ")";
-        } else if(conversion === "HSL") {
-
-        } else if(conversion === "CMYK") {
-
-        } else if(conversion === "PMS") {
-
         } 
     } 
 
     // Color -> [Other]
     function convertColor(conversion, value) {
         if(conversion === "HEX") {
-
+            for (let i = 0; i < name_hex_rgb.length; i++) {
+                if(name_hex_rgb[i][0] === value) {
+                    return(name_hex_rgb[i][1].toLowerCase())
+                }
+            }
         } else if(conversion === "RGB") {
-
-        } else if(conversion === "HSL") {
-
-        } else if(conversion === "CMYK") {
-
-        } else if(conversion === "PMS") {
-
-        } 
+            for (let i = 0; i < name_hex_rgb.length; i++) {
+                if(name_hex_rgb[i][0] === value) {
+                    splitInts = name_hex_rgb[i][2].split(",")
+                    untrun_rgb = splitInts.map(function(v) { return (parseInt(v)/256)});
+                    untrun_rgb = "rgb(" + untrun_rgb.join(",") + ")"
+                    parsedInts = splitInts.map(function(v) { return (parseInt(v)/256).toFixed(2) });
+                    return("rgb(" + parsedInts.join(",") + ")")
+                }
+            }
+        }
     }
     
     // RGB -> [Other]
@@ -486,13 +571,33 @@
         if(conversion === "COLOR") {
             return(threeDimensionalEuclideanDistance(value))
         } else if(conversion === "HEX") {
+            var value = value.split(",")
+            console.log(value)
+            red = parseFloat(value[0].substring(4, value[0].length)) * 256
+            console.log(parseFloat(value[0].substring(4, 8)))
+            green = parseFloat(value[1]) * 256
+            blue = parseFloat(value[2].substring(0, value[2].length - 1)) * 256
+            
+            console.log(red)
+            console.log(green)
+            console.log(blue)
+            
+            r = parseInt(red).toString(16);
+            g = parseInt(green).toString(16);
+            b = parseInt(blue).toString(16);
 
-        } else if(conversion === "HSL") {
+            console.log(r)
+            console.log(g)
+            console.log(b)
+            
+            if (r.length == 1)
+                r = "0" + r;
+            if (g.length == 1)
+                g = "0" + g;
+            if (b.length == 1)
+                b = "0" + b;
 
-        } else if(conversion === "CMYK") {
-
-        } else if(conversion === "PMS") {
-
+            return "#" + r + g + b;
         } 
     }
 

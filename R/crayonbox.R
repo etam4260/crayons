@@ -1,3 +1,15 @@
+pkg.env <- new.env(parent=emptyenv())
+pkg.env$messages <- c(
+  "As you open the crayon box, you hear the cardboard creasing against each other. You then carefully lay each utensil on your desk.",
+  "Good choice of colors -- says Jeremy.",
+  "You open the box under your desk to keep it hidden: no one will try to steal your favorites.",
+  "Your desk is small -- but there is just enough space.",
+  "Opened with delight! You just can't wait to start coloring.",
+  "As you open it, you aren't sure if these are the right colors.",
+  "You place your eraser close by, but you aren't sure if they work well with crayons.",
+  "Darn... My favourite color isn't here."
+)
+
 #' @name crayons
 #' @title crayons
 #' @description During an interaction session, create a coloring tool in the Viewer for
@@ -30,6 +42,8 @@ crayons <- function(palette = "YlOrRd") {
     # Open the viewer for the user to use their crayon box.
     viewer <- getOption("viewer")
     viewer(htmlFile)
+
+    message(pkg.env$messages[sample.int(8, 1)])
   }
 }
 
