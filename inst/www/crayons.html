@@ -17,7 +17,7 @@
 
     .box{
         height: 17.75px;
-        border: .1px solid black;
+        border: .2px solid black;
         margin: 0;
         padding: 0;
         margin-right: -4;
@@ -46,7 +46,7 @@
     
     .rcorners {
             border-radius: 7.5px;
-            border: .1px solid #292827;
+            border: .20px solid #292827;
             padding: 13px; 
             width: 450px;
             height: 50px;
@@ -57,7 +57,7 @@
     
     .color_label {
             border-radius: 5px;
-            border: .1px solid #292827;
+            border: .2px solid #292827;
             font-size:small; 
             height: 25px;
             width: 120px;
@@ -824,12 +824,16 @@
             splitted.pop()
             if(elements != 1 && elements != 0) {
                 document.getElementById("clipboard_details").value = splitted.join(",") + ")"
+                clipboard_text = document.getElementById("clipboard_details").value
+                copyTextToClipboard(clipboard_text);
                 elements -= 1
             } else {
-                document.getElementById("clipboard_details").value = splitted.join(",")
+                document.getElementById("clipboard_details").value = ""
+                clipboard_text = ""
+                
+                copyTextToClipboard(" ");
                 elements = 0
             }
-            clipboard_text = splitted.join(",") + ")"
     })
 
 
