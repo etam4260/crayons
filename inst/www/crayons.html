@@ -17,7 +17,7 @@
 
     .box{
         height: 17.75px;
-        border: .25px solid black;
+        border: .1px solid black;
         margin: 0;
         padding: 0;
         margin-right: -4;
@@ -46,7 +46,7 @@
     
     .rcorners {
             border-radius: 7.5px;
-            border: .25px solid #292827;
+            border: .1px solid #292827;
             padding: 13px; 
             width: 450px;
             height: 50px;
@@ -57,7 +57,7 @@
     
     .color_label {
             border-radius: 5px;
-            border: .25px solid #292827;
+            border: .1px solid #292827;
             font-size:small; 
             height: 25px;
             width: 120px;
@@ -194,7 +194,7 @@
 
     var MAX_BOXES = 18
 
-    var prev_events = []
+    var converted_event_target_value = ""
 
     var name_hex_rgb = [
         ["aqua", "#00FFFF",	"0, 255, 255"],
@@ -422,20 +422,16 @@
                     console.log(value)
                     value = value.map(function(v) { return "\"" + convertColor("HEX", v) + "\""})
                     document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                    clipboard_text =  "c(" + value.join(",") +")"
                 }
             } else if(prev_selected_color === "RGB") {
                 if(elements === 1) {
                     document.getElementById("clipboard_details").value = convertRGB("HEX", untrun_rgb)
                 } else {
-                    text = document.getElementById("clipboard_details").value
-                    value = text.split("rgb")
-                    value.shift()
-                    for (let i = 0; i < value.length; i++) {
-                        value[i] = "rgb(" + value[i].substring(1, value[i].length - 1)
-                    }
-                    console.log(value)
+                    value = untrun_rgb
                     value = value.map(function(v) { return "\"" + convertRGB("HEX", v) + "\""})
                     document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                    clipboard_text =  "c(" + value.join(",") +")"
                 }
             }
         }
@@ -454,6 +450,7 @@
                     document.getElementById("clipboard_details").value = "\"" + convertRGB("COLOR", convertHex("RGB",  document.getElementById("clipboard_details").value)) + "\""
                 } else {
                     text = document.getElementById("clipboard_details").value
+                    console.log(text)
                     value = text.split(",")
                     value[0] = value[0].substring(2, value[0].length)
                     value[value.length-1] = value[value.length-1].substring(1, value[value.length-1].length - 1)
@@ -461,23 +458,21 @@
                     for (let i = 0; i < value.length; i++) {
                         value[i] = value[i].substring(1, value[i].length - 1)
                     }
+                    
                     value = value.map(function(v) { return "\"" + convertRGB("COLOR", convertHex("RGB",  v)) + "\""})
-                    console.log(value)
+                    
                     document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                    clipboard_text = "c(" + value.join(",") +")"
                 }
             } else if(prev_selected_color === "RGB") {
                 if(elements === 1) {
                     document.getElementById("clipboard_details").value = threeDimensionalEuclideanDistance(document.getElementById("clipboard_details").value)
                 } else {
-                    text = document.getElementById("clipboard_details").value
-                    value = text.split("rgb")
-                    value.shift()
-                    for (let i = 0; i < value.length; i++) {
-                        value[i] = "rgb(" + value[i].substring(1, value[i].length - 1)
-                    }
+                    value = untrun_rgb
                     console.log(value)
                     value = value.map(function(v) { return "\"" + convertRGB("COLOR", v) + "\""})
                     document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                    clipboard_text = "c(" + value.join(",") +")"
                 }
             }
         }
@@ -499,13 +494,21 @@
                     value = text.split(",")
                     value[0] = value[0].substring(2, value[0].length)
                     value[value.length-1] = value[value.length-1].substring(0, value[value.length-1].length - 1)
-    
+                    
+                    modified_untrunc_rgb = []
                     for (let i = 0; i < value.length; i++) {
                         value[i] = value[i].substring(1, value[i].length - 1)
                     }
-                    console.log(value)
-                    value = value.map(function(v) { return convertColor("RGB", v)})
+                    
+                    value = value.map(function(v) { 
+                        convert = convertColor("RGB", v)
+                        modified_untrunc_rgb.push(untrun_rgb)
+                        return convert
+                    })
+                    untrun_rgb = modified_untrunc_rgb
+                    console.log(untrun_rgb)
                     document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                    clipboard_text = "c(" + value.join(",") +")"
                 }
             } else if(prev_selected_color === "HEX") {
                 if(elements === 1) {
@@ -515,13 +518,21 @@
                     value = text.split(",")
                     value[0] = value[0].substring(2, value[0].length)
                     value[value.length-1] = value[value.length-1].substring(0, value[value.length-1].length - 1)
-    
+                    
+                    modified_untrunc_rgb = []
                     for (let i = 0; i < value.length; i++) {
                         value[i] = value[i].substring(1, value[i].length - 1)
                     }
                     console.log(value)
-                    value = value.map(function(v) { return convertHex("RGB", v)})
+                    value = value.map(function(v) { 
+                        convert = convertHex("RGB", v)
+                        modified_untrunc_rgb.push(untrun_rgb)
+                        return convert
+                    })
+                    untrun_rgb = modified_untrunc_rgb
+                    console.log(untrun_rgb)
                     document.getElementById("clipboard_details").value = "c(" + value.join(",") +")"
+                    clipboard_text = "c(" + value.join(",") +")"
                 }
             }
         }
@@ -531,9 +542,9 @@
     function threeDimensionalEuclideanDistance(rgb) {
         var value = rgb.split(",")
         console.log(value)
-        red = parseFloat(value[0].substring(4, 7)) * 256
+        red = parseFloat(value[0].substring(4, value[0].length)) * 256
         green = parseFloat(value[1]) * 256
-        blue = parseFloat(value[2].substring(0, 3)) * 256
+        blue = parseFloat(value[2].substring(0, value[2].length - 1)) * 256
 
         min_e = Infinity
         min_e_index = -1 
@@ -559,25 +570,58 @@
 
     function onDragStart(event) {
         eraser_dragging = false
+        if(selected_color_encoding === "HEX") {
+            converted_event_target_value  = event.target.value
+        } else if(selected_color_encoding === "COLOR") {
+            converted_event_target_value  = convertHex("COLOR", event.target.value)
+        } else if(selected_color_encoding === "RGB"){
+            converted_event_target_value  = convertHex("RGB", event.target.value)
+        }
         if(elements === 0) {
             //document.getElementById("clipboard_details").value = " "
-            drag_data = event.target.value
-            event
-                .dataTransfer
-                .setData("Text", event.target.value);
+            if(selected_color_encoding != "RGB") {
+                drag_data = "\"" + converted_event_target_value + "\""
+                event
+                    .dataTransfer
+                    .setData("Text",  "\"" + converted_event_target_value + "\"");
+            } else {
+                drag_data =  converted_event_target_value 
+                event
+                    .dataTransfer
+                    .setData("Text",  converted_event_target_value);
+            }
         } else if(elements === 1) {
-           // document.getElementById("clipboard_details").value = " "
-            drag_data = "c(" + clipboard_text +  ", \"" + event.target.value + "\")"
+            // document.getElementById("clipboard_details").value = " "
+            if(selected_color_encoding != "RGB") {
+                drag_data = "c(" + document.getElementById("clipboard_details").value +  ",\"" + converted_event_target_value + "\")"
 
-            event
-                .dataTransfer
-                .setData("Text", "c(" + clipboard_text +  ", \"" + event.target.value + "\")");
+                event
+                    .dataTransfer
+                    .setData("Text", "c(" + clipboard_text +  ",\"" + converted_event_target_value + "\")");
+            } else {
+                drag_data = "c(" + document.getElementById("clipboard_details").value + "," + converted_event_target_value + ")"
+                console.log(untrun_rgb)
+            
+                event
+                    .dataTransfer
+                    .setData("Text", "c(" + clipboard_text +  "," + converted_event_target_value + ")");
+            }
         } else {
-            drag_data = clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + event.target.value + "\")"
-            //document.getElementById("clipboard_details").value = " "
-            event
-                .dataTransfer
-                .setData("Text", clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + event.target.value + "\")");
+            if(selected_color_encoding != "RGB") {
+                drag_data = clipboard_text.substring(0, clipboard_text.length - 1) + ",\"" + converted_event_target_value  + "\")"
+                //document.getElementById("clipboard_details").value = " "
+                event
+                    .dataTransfer
+                    .setData("Text", document.getElementById("clipboard_details").value.substring(0, document.getElementById("clipboard_details").value.length - 1) + ",\"" + converted_event_target_value  + "\")");
+            } else {
+                drag_data = clipboard_text.substring(0, clipboard_text.length - 1) + "," + converted_event_target_value  + ")"
+                //document.getElementById("clipboard_details").value = " "
+                console.log(untrun_rgb)
+                
+                event
+                    .dataTransfer
+                    .setData("Text", document.getElementById("clipboard_details").value.substring(0, document.getElementById("clipboard_details").value.length - 1) + "," + converted_event_target_value  + ")");
+            }
         }
     }
 
@@ -628,10 +672,10 @@
         } else if(conversion === "HEX") {
             var value = value.split(",")
             console.log(value)
-            red = parseFloat(value[0].substring(4, value[0].length)) * 255
+            red = parseFloat(value[0].substring(4, value[0].length)) * 256
             console.log(parseFloat(value[0].substring(4, 8)))
-            green = parseFloat(value[1]) * 255
-            blue = parseFloat(value[2].substring(0, value[2].length - 1)) * 255
+            green = parseFloat(value[1]) * 256
+            blue = parseFloat(value[2].substring(0, value[2].length - 1)) * 256
 
             console.log(red)
             console.log(green)
@@ -671,9 +715,15 @@
             elements = 0
             copyTextToClipboard(" ")
             drag_data = ""
-            prev_events = []
+            
         } else {
             document.getElementById("clipboard_details").value = drag_data
+            console.log(drag_data)
+            console.log(untrun_rgb)
+            if(selected_color_encoding === "RGB") {
+                untrun_rgb.push(converted_event_target_value)
+            }
+   
             clipboard_text = drag_data
             elements += 1
             copyTextToClipboard(drag_data)
@@ -709,7 +759,7 @@
     }
 
     const copyTextToClipboard = (text) => {
-        prev_events.push(text)
+    
         
         //if (!navigator.clipboard) {
         fallbackCopyTextToClipboard(text);
@@ -732,8 +782,8 @@
             
             if(elements === 1) {
                 if(selected_color_encoding != "RGB") {
-                    copyTextToClipboard("c(" + clipboard_text +  ", \"" + color + "\")")
-                    clipboard_text = "c(" + clipboard_text +  ", \"" + color + "\")"
+                    copyTextToClipboard("c(" + clipboard_text +  ",\"" + color + "\")")
+                    clipboard_text = "c(" + clipboard_text +  ",\"" + color + "\")"
                 } else {
                     copyTextToClipboard("c(" + clipboard_text +  "," + color + ")")
                     clipboard_text = "c(" + clipboard_text +  "," + color + ")"
@@ -742,8 +792,8 @@
                 elements += 1
             } else {
                 if(selected_color_encoding != "RGB") {
-                    copyTextToClipboard(clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + color + "\")")
-                    clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + ", \"" + color + "\")"
+                    copyTextToClipboard(clipboard_text.substring(0, clipboard_text.length - 1) + ",\"" + color + "\")")
+                    clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + ",\"" + color + "\")"
                 } else {
                     copyTextToClipboard(clipboard_text.substring(0, clipboard_text.length - 1) + "," + color + ")")
                     clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + "," + color + ")"
@@ -763,26 +813,23 @@
             document.getElementById("clipboard_details").value = clipboard_text
             elements = 1
         }
-        console.log(prev_events)
+
         console.log(clipboard_text)
         //document.execCommand("paste")
         //Tried pasting
     }
 
     eraser.addEventListener("click", function(event) {
-        if(prev_events.length > 1) {
-            prev = prev_events[prev_events.length - 2]
-            prev_events.pop()
-
-            clipboard_text = prev
-            document.getElementById("clipboard_details").value = prev
-            elements -= 1
-        } else {
-            prev_events.pop()
-            clipboard_text = " "
-            document.getElementById("clipboard_details").value = " "
-            elements = 0
-        }
+            splitted = document.getElementById("clipboard_details").value.split(",")
+            splitted.pop()
+            if(elements != 1 && elements != 0) {
+                document.getElementById("clipboard_details").value = splitted.join(",") + ")"
+                elements -= 1
+            } else {
+                document.getElementById("clipboard_details").value = splitted.join(",")
+                elements = 0
+            }
+            clipboard_text = splitted.join(",") + ")"
     })
 
 
