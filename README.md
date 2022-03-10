@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# crayons <img src="./man/figures/crayon_box_logo.png" alt="eraser" style="width:50px;height:50px;">
+# crayons <img src="./man/figures/crayon_box_logo.png" alt="eraser" style="width:25px;height:25px;"> <img src='man/figures/logo.png' align="right" width="139"/>
 
 <!-- badges: start -->
 
@@ -9,10 +9,7 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![R-CMD-check](https://github.com/etam4260/crayons/workflows/R-CMD-check/badge.svg)](https://github.com/etam4260/crayons/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/etam4260/crayons/branch/main/graph/badge.svg)](https://codecov.io/gh/etam4260/crayons?branch=main)
+maturing](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![cran
 version](https://www.r-pkg.org/badges/version/crayons)](https://cran.r-project.org/package=crayons)
 [![cran
@@ -22,7 +19,7 @@ downloads](https://cranlogs.r-pkg.org/badges/crayons?color=C9A115)](https://gith
 <!-- badges: end -->
 
 Get your favorite crayons ready for all your experimental coloring needs
-in R.
+in RStudio and R.
 
 Please follow the installation steps carefully and take a gander at the
 instruction manual below for proper handling.
@@ -39,9 +36,16 @@ install.packages("devtools")
 devtools::install_github("etam4260/crayons")
 ```
 
+The coloring tool(crayons) are different on Mac OS versus Windows and
+therefore the features are different.
+
+Below is an example of the available HTML5 coloring input tool used.
+Click on it to see what it will look like in RStudio.
+<input type="color" value="red">
+
 ## Instruction Manual
 
-This is how to get yourself a crayon box.
+This is how to ask for a crayon box and open it…
 
 ``` r
 # Asking the teacher for crayons...
@@ -54,44 +58,54 @@ crayons()
 This will open up a viewer pane in your RStudio session as an
 interactive color creation tool.
 
-<img src="./man/figures/crayon_box.PNG" alt="eraser" style="">
-
 Swap crayons by clicking on each box for access to the cart of options.
 
-<img src="./man/figures/color_selection.PNG" alt="eraser" style="">
+1.  Press the add buttons or drag and drop colors to interactive text
+    canvas.
 
-(A shout out to Google for your amazing HTML color selection tool!)
-<input type="color">
+2.  Click on the colors themselves to swap to different colored crayons.
+
+3.  Switch from HEX, COLOR, and RGB tabs to see how they are represented
+    in R code.
+
+4.  Press the eraser button to erase the last entry
+
+5.  Drag and drop the eraser onto the text canvas to erase everything.
+
+**What is currently shown on the text canvas is also available in your
+computer’s paste command**
 
 ## Demo
-
-<img src="./man/figures/demo.gif" alt="eraser" style="">
-
-**Drag and drop colors to the interactive text canvas.** **Press the add
-buttons to copy the color to the clipboard and the screen.**
-
-**BE CAREFUL AS THESE OPERATIONS WILL OVERWRITE YOUR CURRENT COMPUTER
-CLIPBOARD CONTENT** CTRL+C
-
-**Made a coloring mistake? Just use the eraser to remove content from
-the interactive and current clipboard** Press it to erase the last item.
-Drag and drop it onto the text canvas to erase everything.
-
-**Colors are directly pastable from your computer’s paste command**
 
 ## Moar Crayons
 
 The current crayon box only comes with **8**. Moar crayons will be
 available in future updates!
 
-Upcoming features:
+**Upcoming features:**
 
--   Ability to ask for more crayon boxes
--   Draggable crayons to different areas of your viewer desk
--   A new function for interactive plotting directly in the viewer tab.
-    (Move plots in and out that are currently located in the Plots tab)
+-   Ability to ask for more crayons and crayon boxes.
+
+-   Draggable crayons to different areas of your viewer desk for
+    organization.
+
 -   Paintbrush cursor
+
 -   Erasing animation
+
+-   A new function for interactive plotting directly in the viewer tab.
+    (Move plots in and out that are currently located in the Plots tab).
+
+-   Ability to specify to allow access to the computer copy command.
+
+-   Ability to save color palletes to user’s RProfile so it can be saved
+    and loaded in from other R sessions.
+
+-   A color loading bar to have a visual cue of what colors are
+    currently loaded into the clipboard.
+
+-   Proper scaling of the Viewer UI to support certain screen sizes as
+    well as the appropriate sizing of the Zoom.
 
 ## Disclaimers
 
