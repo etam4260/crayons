@@ -40,8 +40,9 @@ crayons <- function(palette = "") {
 
     file.copy(paste(crayons_path, "/www/crayons.html", sep = ""), htmlFile)
     file.copy(paste(crayons_path, "/www/eraser.png", sep = ""), file.path(tempDir, "eraser.png"))
-    dir.create(paste(tempDir, "\\js", sep=""))
-    dir.create(paste(tempDir, "\\css", sep=""))
+
+    dir.create(paste(tempDir, "/js", sep=""))
+    dir.create(paste(tempDir, "/css", sep=""))
     file.copy(paste(crayons_path, "/www/js/script.js", sep = ""), file.path(tempDir, "js/script.js"))
     file.copy(paste(crayons_path, "/www/css/style.css", sep = ""), file.path(tempDir, "css/style.css"))
 
@@ -49,7 +50,7 @@ crayons <- function(palette = "") {
     viewer <- getOption("viewer")
     viewer(htmlFile)
 
-    message(pkg.env$messages[sample.int(8, 1)])
+    message(pkg.env$messages[sample.int(7, 1)])
   }
 }
 
