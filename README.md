@@ -39,10 +39,6 @@ devtools::install_github("etam4260/crayons")
 The coloring tool(crayons) are different on Mac OS versus Windows and
 therefore the features are different.
 
-Below is an example of the available HTML5 coloring input tool used.
-Click on it to see what it will look like in RStudio.
-<input type="color" value="red">
-
 ## Instruction Manual
 
 This is how to ask for a crayon box and open it…

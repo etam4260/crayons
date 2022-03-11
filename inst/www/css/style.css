@@ -1,0 +1,91 @@
+/* Hopefully a viable method of shaking the eraser photo as an animation */
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+/* The color inputs(crayons). Should show a crosshair when hovered over element */
+.colors {cursor: crosshair;}
+
+/* Previously .box, now span_colors_stacked for the color loading bar at top */
+.span_colors_stacked {
+    height: 15px;
+    border: .25px solid black;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
+    margin-right: -4;
+    background-color: white;
+    display: inline-block;
+}
+
+/* The container box that eraser is located in to create the dimming effect */
+.eraser_container {
+    position: relative;
+    right: "30px";
+}
+/* Eraser is dimmed when hovered over */
+.eraser_container:hover .image {
+    opacity: 0.3;
+}
+/* Initial eraser image traits */
+.eraser {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    transition: .5s ease;
+    backface-visibility: hidden;
+} 
+
+/* The text canvas where current clipboard content is located as well as current colors stacked */
+.text_canvas {
+        border-radius: 7.5px;
+        border: .5px solid #292827;
+        padding: 13px; 
+        width: 450px;
+        height: 50px;
+        font-size:small;
+        position: relative;
+        top: 10px;
+}
+
+/* The text boxes that show the various encodings of the current color selected */
+.encoding_color_text_box {
+        border-radius: 5px;
+        border: .5px solid #292827;
+        font-size:x-small; 
+        height: 25px;
+        width: 120px;
+        margin-top: 3px;
+        position: relative;
+        top: 7px;
+}
+
+/* Selection buttons for encoding the current data in the text canvas */
+.encoding_select {
+        border-radius: 5px;
+        border: .25px solid #292827;
+        width: 120px;
+        height: 20px;
+}
+
+/* Highlight effect when encoding selection button is selected */
+.highlight_encoding_select {
+        background: rgb(91, 101, 128);
+        color: white;
+}
+
+/* Styling of the color add buttons */
+.add_color_button {
+    border-radius: 3px;
+    border: .5px solid #292827;
+}

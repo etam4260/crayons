@@ -1,13 +1,12 @@
 pkg.env <- new.env(parent=emptyenv())
 pkg.env$messages <- c(
-  "As you open the crayon box, you hear the cardboard creasing against each other. You then carefully lay each utensil on your desk.",
-  "Good choice of colors -- says Jeremy.",
-  "You open the box under your desk to keep it hidden: no one will try to steal your favorites.",
-  "Your desk is small -- but there is just enough space.",
-  "Opened with delight! You just can't wait to start coloring.",
-  "As you open it, you aren't sure if these are the right colors.",
-  "You place your eraser close by, but you aren't sure if they work well with crayons.",
-  "Darn... My favourite color isn't here."
+  "As you open the crayon box, you hear the cardboard creasing against each other. You then carefully lay each utensil on your desk...",
+  "Good choice of colors -- says Jeremy...",
+  "You open the crayon box under your desk to keep it hidden: no one will try to steal your favorites...",
+  "Your desk is small -- but there is just enough space...",
+  "As you open the crayon box, you aren't sure if these are the right colors...",
+  "You place your eraser close by, but you don't remember them working well with crayons...",
+  "My favourite color isn't here..."
 )
 
 #' @name crayons
@@ -15,8 +14,11 @@ pkg.env$messages <- c(
 #' @description During an interaction session, create a coloring tool in the Viewer for
 #'   users to create different vectors of colors. Will copy directly to the user clipboard.
 #' @export
-#' @returns Nothing. It's side effect is to activate the Viewer to be used as a coloring tool.
-crayons <- function(palette = "YlOrRd") {
+crayons <- function(palette = "") {
+
+  # Allow users to specify a wesanderson or RColorBrewer template that can be
+  # directly uploaded into the HTML UI.
+
   # Each crayon box resides in its own temporary directory
   # Where the user can choose to have multiple active.
   # Users can actively add new plots to each crayon box to customize their plots.
@@ -37,7 +39,11 @@ crayons <- function(palette = "YlOrRd") {
     htmlFile <- file.path(tempDir, "crayons.html")
 
     file.copy(paste(crayons_path, "/www/crayons.html", sep = ""), htmlFile)
-    file.copy(paste(crayons_path, "/help/figures/eraser.png", sep = ""), file.path(tempDir, "eraser.png"))
+    file.copy(paste(crayons_path, "/www/eraser.png", sep = ""), file.path(tempDir, "eraser.png"))
+    dir.create(paste(tempDir, "\\js", sep=""))
+    dir.create(paste(tempDir, "\\css", sep=""))
+    file.copy(paste(crayons_path, "/www/js/script.js", sep = ""), file.path(tempDir, "js/script.js"))
+    file.copy(paste(crayons_path, "/www/css/style.css", sep = ""), file.path(tempDir, "css/style.css"))
 
     # Open the viewer for the user to use their crayon box.
     viewer <- getOption("viewer")
