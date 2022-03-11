@@ -25,7 +25,7 @@
 /* Previously .box, now span_colors_stacked for the color loading bar at top */
 .span_colors_stacked {
     height: 15px;
-    border: .25px solid black;
+    border: .5px solid black;
     border-radius: 5px;
     margin: 0;
     padding: 0;
@@ -79,7 +79,7 @@
 /* Selection buttons for encoding the current data in the text canvas */
 .encoding_select {
         border-radius: 5px;
-        border: .25px solid #292827;
+        border: .5px solid #292827;
         height: 30px;
         width: 50px;
         font-size: xx-small;
