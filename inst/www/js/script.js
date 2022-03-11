@@ -164,9 +164,6 @@ var color_wheel_input_two = document.getElementById("color_wheel_input_two")
 var color_wheel_input_three = document.getElementById("color_wheel_input_three")
 var color_wheel_input_four = document.getElementById("color_wheel_input_four")
 var color_wheel_input_five = document.getElementById("color_wheel_input_five")
-var color_wheel_input_six = document.getElementById("color_wheel_input_six")
-var color_wheel_input_seven =  document.getElementById("color_wheel_input_seven")
-var color_where_input_eight = document.getElementById("color_wheel_input_eight")
 
 // Grab all the html color add buttons and store them into a list.
 var add_color_input_one = document.getElementById("color_one_add")
@@ -174,9 +171,6 @@ var add_color_input_two = document.getElementById("color_two_add")
 var add_color_input_three = document.getElementById("color_three_add")
 var add_color_input_four = document.getElementById("color_four_add")
 var add_color_input_five = document.getElementById("color_five_add")
-var add_color_input_six = document.getElementById("color_six_add")
-var add_color_input_seven =  document.getElementById("color_seven_add")
-var add_color_input_eight = document.getElementById("color_eight_add")
 
 // Grab all the encoding buttons and store them into list.
 var hex_button_encoding = document.getElementById("hex")
@@ -210,15 +204,6 @@ document.getElementById("color_four_color").value = singleElementConvertToColor(
 document.getElementById("color_five_hex").value = color_wheel_input_five.value
 document.getElementById("color_five_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_five.value)
 document.getElementById("color_five_color").value = singleElementConvertToColor("HEX", color_wheel_input_five.value)
-document.getElementById("color_six_hex").value = color_wheel_input_six.value
-document.getElementById("color_six_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_six.value)
-document.getElementById("color_six_color").value = singleElementConvertToColor("HEX", color_wheel_input_six.value)
-document.getElementById("color_seven_hex").value = color_wheel_input_seven.value
-document.getElementById("color_seven_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_seven.value)
-document.getElementById("color_seven_color").value = singleElementConvertToColor("HEX", color_wheel_input_seven.value)
-document.getElementById("color_eight_hex").value = color_wheel_input_eight.value
-document.getElementById("color_eight_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_eight.value)
-document.getElementById("color_eight_color").value = singleElementConvertToColor("HEX", color_wheel_input_eight.value)
 
 /** START-ENCODING-BUTTONS **/
 
@@ -578,29 +563,6 @@ color_wheel_input_five.addEventListener("input", function(event) {
     
     clipboardAddChanged(color_wheel_input_five.value)
 })
-color_wheel_input_six.addEventListener("input", function(event) {
-    document.getElementById("color_six_hex").value = color_wheel_input_six.value
-    document.getElementById("color_six_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_six.value)
-    document.getElementById("color_six_color").value = singleElementConvertToColor("HEX", color_wheel_input_six.value)
-    
-    clipboardAddChanged(color_wheel_input_six.value)
-
-})
-color_wheel_input_seven.addEventListener("input", function(event) {
-    document.getElementById("color_seven_hex").value = color_wheel_input_seven.value
-    document.getElementById("color_seven_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_seven.value)
-    document.getElementById("color_seven_color").value = singleElementConvertToColor("HEX", color_wheel_input_seven.value)
-    
-    clipboardAddChanged(color_wheel_input_seven.value)
-
-})
-color_wheel_input_eight.addEventListener("input", function(event) {
-    document.getElementById("color_eight_hex").value = color_wheel_input_eight.value
-    document.getElementById("color_eight_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_eight.value)
-    document.getElementById("color_eight_color").value = singleElementConvertToColor("HEX", color_wheel_input_eight.value)
-    
-    clipboardAddChanged(color_wheel_input_eight.value)
-})
 
 /** END ON-ADD-COLOR-INPUT **/ 
 /** START ON-ADD-COLOR-BUTTON **/ 
@@ -620,14 +582,6 @@ add_color_input_four.addEventListener("click", function(event) {
 add_color_input_five.addEventListener("click", function(event) {
     clipboardAddChanged(color_wheel_input_five.value)
 })
-add_color_input_six.addEventListener("click", function(event) {
-    clipboardAddChanged(color_wheel_input_six.value)
-})
-add_color_input_seven.addEventListener("click", function(event) {
-    clipboardAddChanged(color_wheel_input_seven.value)
-})
-add_color_input_eight.addEventListener("click", function(event) {
-    clipboardAddChanged(color_where_input_eight.value)
-})
+
 
 /** END ON-ADD-COLOR-BUTTON **/ 

@@ -14,7 +14,13 @@
 }
 
 /* The color inputs(crayons). Should show a crosshair when hovered over element */
-.colors {cursor: crosshair;}
+.colors {
+    cursor: crosshair;
+    transform: rotate(90deg);
+    position: absolute;
+    left: 50px;
+    top: 70px;
+}
 
 /* Previously .box, now span_colors_stacked for the color loading bar at top */
 .span_colors_stacked {
@@ -51,8 +57,8 @@
         border-radius: 7.5px;
         border: .5px solid #292827;
         padding: 13px; 
-        width: 450px;
-        height: 50px;
+        width: 425px;
+        height: 110px;
         font-size:small;
         position: relative;
         top: 10px;
@@ -62,9 +68,9 @@
 .encoding_color_text_box {
         border-radius: 5px;
         border: .5px solid #292827;
-        font-size:x-small; 
-        height: 25px;
-        width: 120px;
+        font-size:xx-small; 
+        height: 30px;
+        width: 70px;
         margin-top: 3px;
         position: relative;
         top: 7px;
@@ -74,8 +80,9 @@
 .encoding_select {
         border-radius: 5px;
         border: .25px solid #292827;
-        width: 120px;
-        height: 20px;
+        height: 30px;
+        width: 50px;
+        font-size: xx-small;
 }
 
 /* Highlight effect when encoding selection button is selected */
