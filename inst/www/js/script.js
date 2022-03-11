@@ -196,29 +196,29 @@ var drag_data = ""
 var eraser_dragging = false
 
 document.getElementById("color_one_hex").value = color_wheel_input_one.value
-document.getElementById("color_one_rgb").value = convertToRGB("HEX", color_wheel_input_one.value)
-document.getElementById("color_one_color").value = convertToColor("HEX", color_wheel_input_one.value)
+document.getElementById("color_one_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_one.value)
+document.getElementById("color_one_color").value = singleElementConvertToColor("HEX", color_wheel_input_one.value)
 document.getElementById("color_two_hex").value = color_wheel_input_two.value
-document.getElementById("color_two_rgb").value = convertToRGB("HEX", color_wheel_input_two.value)
-document.getElementById("color_two_color").value = convertToColor("HEX", color_wheel_input_two.value)
+document.getElementById("color_two_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_two.value)
+document.getElementById("color_two_color").value = singleElementConvertToColor("HEX", color_wheel_input_two.value)
 document.getElementById("color_three_hex").value = color_wheel_input_three.value
-document.getElementById("color_three_rgb").value = convertToRGB("HEX", color_wheel_input_three.value)
-document.getElementById("color_three_color").value = convertToColor("HEX", color_wheel_input_three.value)
+document.getElementById("color_three_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_three.value)
+document.getElementById("color_three_color").value = singleElementConvertToColor("HEX", color_wheel_input_three.value)
 document.getElementById("color_four_hex").value = color_wheel_input_four.value
-document.getElementById("color_four_rgb").value = convertToRGB("HEX", color_wheel_input_four.value)
-document.getElementById("color_four_color").value = convertToColor("HEX", color_wheel_input_four.value)
+document.getElementById("color_four_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_four.value)
+document.getElementById("color_four_color").value = singleElementConvertToColor("HEX", color_wheel_input_four.value)
 document.getElementById("color_five_hex").value = color_wheel_input_five.value
-document.getElementById("color_five_rgb").value = convertToRGB("HEX", color_wheel_input_five.value)
-document.getElementById("color_five_color").value = convertToColor("HEX", color_wheel_input_five.value)
+document.getElementById("color_five_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_five.value)
+document.getElementById("color_five_color").value = singleElementConvertToColor("HEX", color_wheel_input_five.value)
 document.getElementById("color_six_hex").value = color_wheel_input_six.value
-document.getElementById("color_six_rgb").value = convertToRGB("HEX", color_wheel_input_six.value)
-document.getElementById("color_six_color").value = convertToColor("HEX", color_wheel_input_six.value)
+document.getElementById("color_six_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_six.value)
+document.getElementById("color_six_color").value = singleElementConvertToColor("HEX", color_wheel_input_six.value)
 document.getElementById("color_seven_hex").value = color_wheel_input_seven.value
-document.getElementById("color_seven_rgb").value = convertToRGB("HEX", color_wheel_input_seven.value)
-document.getElementById("color_seven_color").value = convertToColor("HEX", color_wheel_input_seven.value)
+document.getElementById("color_seven_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_seven.value)
+document.getElementById("color_seven_color").value = singleElementConvertToColor("HEX", color_wheel_input_seven.value)
 document.getElementById("color_eight_hex").value = color_wheel_input_eight.value
-document.getElementById("color_eight_rgb").value = convertToRGB("HEX", color_wheel_input_eight.value)
-document.getElementById("color_eight_color").value = convertToColor("HEX", color_wheel_input_eight.value)
+document.getElementById("color_eight_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_eight.value)
+document.getElementById("color_eight_color").value = singleElementConvertToColor("HEX", color_wheel_input_eight.value)
 
 /** START-ENCODING-BUTTONS **/
 
@@ -229,9 +229,9 @@ hex_button_encoding.addEventListener("click", function() {
     rgb_button_encoding.classList.remove('highlight_encoding_select');
     if(elements != 0) {
         if(encoding === "COLOR") {
-            clipboardAddChanged(convertToHex("COLOR", clipboard_text))
+            clipboardDeleteConvert(convertToHex("COLOR", clipboard_text))
         } else {
-            clipboardAddChanged(convertToHex("RGB", clipboard_text))
+            clipboardDeleteConvert(convertToHex("RGB", clipboard_text))
         }
     }
     
@@ -244,9 +244,9 @@ color_button_encoding.addEventListener("click", function() {
     rgb_button_encoding.classList.remove('highlight_encoding_select');
     if(elements != 0) {
         if(encoding === "RGB") {
-            clipboardAddChanged(convertToColor("RGB", clipboard_text))
+            clipboardDeleteConvert(convertToColor("RGB", clipboard_text))
         } else {
-            clipboardAddChanged(convertToColor("HEX", clipboard_text))
+            clipboardDeleteConvert(convertToColor("HEX", clipboard_text))
         }
     }
     encoding = "COLOR"
@@ -258,9 +258,9 @@ rgb_button_encoding.addEventListener("click", function() {
     rgb_button_encoding.classList.add('highlight_encoding_select');
     if(elements != 0) {
         if(encoding === "HEX") {
-            clipboardAddChanged(convertToRGB("HEX", clipboard_text))
+            clipboardDeleteConvert(convertToRGB("HEX", clipboard_text))
         } else {
-            clipboardAddChanged(convertToRGB("COLOR", clipboard_text))
+            clipboardDeleteConvert(convertToRGB("COLOR", clipboard_text))
         }
     }
     encoding = "RGB"
@@ -274,25 +274,16 @@ rgb_button_encoding.addEventListener("click", function() {
 // COLOR is off format "blue"
 // HEX is of format "#114132"
 // RGB is of format rgb(0.3131,0.1314,0.1241)
-function convertToHex(from, value) {
+function singleElementConvertToHex(from, value) {
     if(from === "COLOR") {
-        if(elements === 1) {
-            all_colors_split = value.split(",")
-        } else {
-            all_colors_split = value.split(",")
-            all_colors_split[0] = all_colors_split[0].substring(2, all_colors_split[0].length)
-            all_colors_split[all_colors_split.length - 1] = all_colors_split[all_colors_split.length - 1].substring(0, all_colors_split[all_colors_split.length - 1].length - 1)
-        }
-        res_string = ""
-
+        value = value.substring(1, value.length-1)
         for (let i = 0; i < name_hex_rgb.length; i++) {
             if(name_hex_rgb[i][0] === value) {
-                return(name_hex_rgb[i][1].toLowerCase())
+                console.log(name_hex_rgb[i][0])
+                return name_hex_rgb[i][1].toLowerCase() 
             }
         }
     } else {
-        var value = value.split(",")
-
         red = parseFloat(value[0].substring(4, value[0].length)) * 256
         green = parseFloat(value[1]) * 256
         blue = parseFloat(value[2].substring(0, value[2].length - 1)) * 256
@@ -300,7 +291,7 @@ function convertToHex(from, value) {
         hexr = parseInt(red).toString(16);
         hexg = parseInt(green).toString(16);
         hexb = parseInt(blue).toString(16);
-  
+
         if (r.length == 1) 
             r = "0" + r;
         if (g.length == 1) 
@@ -310,16 +301,7 @@ function convertToHex(from, value) {
         return "#" + r + g + b;
     }
 }
-// Convert to color value from "encoding"
-function convertToColor(from, value) {
-    if(from === "RGB") {
-       return threeDimensionalEuclideanDistance(value)
-    } else {
-       return convertToColor("RGB", convertToRGB("HEX", value))
-    }
-}
-// Convert to RGB value from "encoding"
-function convertToRGB(from, value) {
+function singleElementConvertToRGB(from, value) {
     if(from === "HEX") {
         var value = value.match(/[A-Za-z0-9]{2}/g);
         value = value.map(function(v) { return (parseInt(v, 16)/256)});
@@ -332,6 +314,79 @@ function convertToRGB(from, value) {
                 parsedInts = splitRGBInts.map(function(v) { return (parseInt(v)/256)});
                 return("rgb(" + parsedInts.join(",") + ")")
             }
+        }
+    }
+}
+
+function singleElementConvertToColor(from, value) {
+    if(from === "RGB") {
+        return threeDimensionalEuclideanDistance(value)
+    } else {
+        return singleElementConvertToColor("RGB", singleElementConvertToRGB("HEX", value))
+    }
+}
+
+function convertToHex(from, value) {
+    if(from === "COLOR") {
+        if(elements === 1) {
+            return  "\"" + singleElementConvertToHex("COLOR", value) +  "\""
+        } else {
+            all_colors_split = value.split(",")
+            all_colors_split[0] = all_colors_split[0].substring(2, all_colors_split[0].length)
+            all_colors_split[all_colors_split.length - 1] = all_colors_split[all_colors_split.length - 1].substring(0, all_colors_split[all_colors_split.length - 1].length - 1)
+            
+            for(let i = 0; i < all_colors_split.length; i++) {
+                all_colors_split[i] = singleElementConvertToHex("COLOR", all_colors_split[i])
+            }
+
+            return "c(\"" + all_colors_split.join("\",\"") + "\")"
+        }
+
+    } else {
+        if(elements === 1) {
+            return singleElementConvertToHex("RGB", value)
+        } else {
+
+        }
+    }
+}
+
+// Convert to color value from "encoding"
+function convertToColor(from, value) {
+    if(from === "RGB") {
+       if(elements === 1) {
+            return "\"" + singleElementConvertToColor("RGB", value) + "\"" 
+       } else {
+
+       }
+    } else {
+       if(elements === 1) {
+            return "\"" +  singleElementConvertToColor("HEX", value) + "\""
+       } else {
+            all_colors_split = value.split(",")
+            all_colors_split[0] = all_colors_split[0].substring(2, all_colors_split[0].length)
+            all_colors_split[all_colors_split.length - 1] = all_colors_split[all_colors_split.length - 1].substring(0, all_colors_split[all_colors_split.length - 1].length - 1)
+            
+            for(let i = 0; i < all_colors_split.length; i++) {
+                all_colors_split[i] = singleElementConvertToColor("HEX", all_colors_split[i])
+            }
+            return("c(\"" + all_colors_split.join("\",\"") + "\")")
+        }
+    }
+}
+// Convert to RGB value from "encoding"
+function convertToRGB(from, value) {
+    if(from === "HEX") {
+        if(elements === 1) {
+            return singleElementConvertToRGB("HEX", value)
+        } else {
+
+        }
+    } else {
+        if(elements === 1) {
+            return singleElementConvertToRGB("COLOR", value)
+        } else {
+
         }
     }
 }
@@ -378,7 +433,11 @@ function onColorsDrag(event) {
         .setData("Text",  new_text_clipboard_text);
 }
 
-
+function clipboardDeleteConvert(newtext) {
+    clipboard_text = newtext
+    document.getElementById("clipboard_area").value = clipboard_text
+    copyTextToClipboard(clipboard_text)
+}
 
 function allowTextCanvasDrop(event) {
     event.preventDefault()
@@ -405,27 +464,20 @@ function onTextCanvasDrop(event) {
 function clipboardAddChanged(newtext) {
     // Need to modify current clipboard content and variable by appending
     // new color.
-    if(encoding === "COLOR") {
-        newtext = convertToColor("HEX", newtext)
+    if(encoding === "HEX") {
+        newtext = "\"" + newtext + "\""
+    } else if(encoding === "COLOR") {
+        newtext = "\"" + singleElementConvertToColor("HEX", newtext) + "\""
     } else if(encoding == "RGB") {
-        newtext = convertToRGB("HEX", newtext)
+        newtext = singleElementConvertToRGB("HEX", newtext) 
     }
 
-
     if(elements === 0) {
-        clipboard_text = "\"" + newtext + "\""
+        clipboard_text = newtext
     } else if(elements === 1) {
-        if(encoding == "RGB") {
-            clipboard_text = "c(" + clipboard_text + "," + newtext + ")"
-        } else {
-            clipboard_text = "c(" + clipboard_text + ",\"" + newtext + "\")"
-        }
+        clipboard_text = "c(" + clipboard_text + "," + newtext + ")"
     } else if(elements > 1) {
-        if(encoding === "RGB") {
-            clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + "," + newtext + ")"
-        } else {
-            clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + ",\"" + newtext + "\")"
-        }
+        clipboard_text = clipboard_text.substring(0, clipboard_text.length - 1) + "," + newtext + ")"
     }
     document.getElementById("clipboard_area").value = clipboard_text
     elements += 1
@@ -469,7 +521,7 @@ function onEraserDrag(event) {
 eraser.addEventListener("click", function(event) {
     if(elements === 1) {
         clipboard_text = " "
-        elements = 0
+        elements = 0 
     } else if(elements > 1) {
         if(encoding === "RGB") {
             splitted = document.getElementById("clipboard_area").value.split("),")
@@ -481,6 +533,9 @@ eraser.addEventListener("click", function(event) {
             clipboard_text = splitted.join(",") + ")"
         }
         elements -= 1
+        if(elements === 1) {
+            clipboard_text = clipboard_text.substring(2, clipboard_text.length - 1)
+        }
     }
     document.getElementById("clipboard_area").value = clipboard_text
     copyTextToClipboard(clipboard_text)
@@ -490,59 +545,59 @@ eraser.addEventListener("click", function(event) {
 /** START ON-ADD-COLOR-INPUT**/ 
 color_wheel_input_one.addEventListener("input", function(event) {
     document.getElementById("color_one_hex").value = color_wheel_input_one.value
-    document.getElementById("color_one_rgb").value = convertToRGB("HEX", color_wheel_input_one.value)
-    document.getElementById("color_one_color").value = convertToColor("HEX", color_wheel_input_one.value)
+    document.getElementById("color_one_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_one.value)
+    document.getElementById("color_one_color").value = singleElementConvertToColor("HEX", color_wheel_input_one.value)
     
     clipboardAddChanged(color_wheel_input_one.value)
 })
 color_wheel_input_two.addEventListener("input", function(event) {
     document.getElementById("color_two_hex").value = color_wheel_input_two.value
-    document.getElementById("color_two_rgb").value = convertToRGB("HEX", color_wheel_input_two.value)
-    document.getElementById("color_two_color").value = convertToColor("HEX", color_wheel_input_two.value)
+    document.getElementById("color_two_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_two.value)
+    document.getElementById("color_two_color").value = singleElementConvertToColor("HEX", color_wheel_input_two.value)
     
     clipboardAddChanged(color_wheel_input_two.value)
 })
 color_wheel_input_three.addEventListener("input", function(event) {
     document.getElementById("color_three_hex").value = color_wheel_input_three.value
-    document.getElementById("color_three_rgb").value = convertToRGB("HEX", color_wheel_input_three.value)
-    document.getElementById("color_three_color").value = convertToColor("HEX", color_wheel_input_three.value)
+    document.getElementById("color_three_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_three.value)
+    document.getElementById("color_three_color").value = singleElementConvertToColor("HEX", color_wheel_input_three.value)
     
     clipboardAddChanged(color_wheel_input_three.value)
 })
 color_wheel_input_four.addEventListener("input", function(event) {
     document.getElementById("color_four_hex").value = color_wheel_input_four.value
-    document.getElementById("color_four_rgb").value = convertToRGB("HEX", color_wheel_input_four.value)
-    document.getElementById("color_four_color").value = convertToColor("HEX", color_wheel_input_four.value)
+    document.getElementById("color_four_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_four.value)
+    document.getElementById("color_four_color").value = singleElementConvertToColor("HEX", color_wheel_input_four.value)
     
     clipboardAddChanged(color_wheel_input_four.value)
 })
 color_wheel_input_five.addEventListener("input", function(event) {
     document.getElementById("color_five_hex").value = color_wheel_input_five.value
-    document.getElementById("color_five_rgb").value = convertToRGB("HEX", color_wheel_input_five.value)
-    document.getElementById("color_five_color").value = convertToColor("HEX", color_wheel_input_five.value)
+    document.getElementById("color_five_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_five.value)
+    document.getElementById("color_five_color").value = singleElementConvertToColor("HEX", color_wheel_input_five.value)
     
     clipboardAddChanged(color_wheel_input_five.value)
 })
 color_wheel_input_six.addEventListener("input", function(event) {
     document.getElementById("color_six_hex").value = color_wheel_input_six.value
-    document.getElementById("color_six_rgb").value = convertToRGB("HEX", color_wheel_input_six.value)
-    document.getElementById("color_six_color").value = convertToColor("HEX", color_wheel_input_six.value)
+    document.getElementById("color_six_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_six.value)
+    document.getElementById("color_six_color").value = singleElementConvertToColor("HEX", color_wheel_input_six.value)
     
     clipboardAddChanged(color_wheel_input_six.value)
 
 })
 color_wheel_input_seven.addEventListener("input", function(event) {
     document.getElementById("color_seven_hex").value = color_wheel_input_seven.value
-    document.getElementById("color_seven_rgb").value = convertToRGB("HEX", color_wheel_input_seven.value)
-    document.getElementById("color_seven_color").value = convertToColor("HEX", color_wheel_input_seven.value)
+    document.getElementById("color_seven_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_seven.value)
+    document.getElementById("color_seven_color").value = singleElementConvertToColor("HEX", color_wheel_input_seven.value)
     
     clipboardAddChanged(color_wheel_input_seven.value)
 
 })
 color_wheel_input_eight.addEventListener("input", function(event) {
     document.getElementById("color_eight_hex").value = color_wheel_input_eight.value
-    document.getElementById("color_eight_rgb").value = convertToRGB("HEX", color_wheel_input_eight.value)
-    document.getElementById("color_eight_color").value = convertToColor("HEX", color_wheel_input_eight.value)
+    document.getElementById("color_eight_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_eight.value)
+    document.getElementById("color_eight_color").value = singleElementConvertToColor("HEX", color_wheel_input_eight.value)
     
     clipboardAddChanged(color_wheel_input_eight.value)
 })
