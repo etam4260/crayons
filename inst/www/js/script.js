@@ -215,7 +215,7 @@ hex_button_encoding.addEventListener("click", function() {
     if(elements != 0) {
         if(encoding === "COLOR") {
             clipboardDeleteConvert(convertToHex("COLOR", clipboard_text))
-        } else {
+        } else if(encoding == "RGB") {
             clipboardDeleteConvert(convertToHex("RGB", clipboard_text))
         }
     }
@@ -230,7 +230,7 @@ color_button_encoding.addEventListener("click", function() {
     if(elements != 0) {
         if(encoding === "RGB") {
             clipboardDeleteConvert(convertToColor("RGB", clipboard_text))
-        } else {
+        } else  if(encoding == "HEX"){
             clipboardDeleteConvert(convertToColor("HEX", clipboard_text))
         }
     }
@@ -244,7 +244,7 @@ rgb_button_encoding.addEventListener("click", function() {
     if(elements != 0) {
         if(encoding === "HEX") {
             clipboardDeleteConvert(convertToRGB("HEX", clipboard_text))
-        } else {
+        } else  if(encoding == "COLOR"){
             clipboardDeleteConvert(convertToRGB("COLOR", clipboard_text))
         }
     }

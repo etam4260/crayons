@@ -68,7 +68,6 @@
 /* The text boxes that show the various encodings of the current color selected */
 .encoding_color_text_box {
         border-radius: 5px;
-        border: .5px solid #292827;
         font-size:xx-small; 
         height: 30px;
         width: 70px;
