@@ -3,65 +3,65 @@
     <title>RStudio Crayon Box HTML Widget</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+<body style="background-color:#f3b21c;">
+    <button class = "encoding_select highlight_encoding_select" id = "hex" type="button" style="position: absolute; left: 10px;top: 192.5px;">HEX</button>
+    <button class = "encoding_select" id = "color" type="button" style="position: absolute; left: 10px;top: 242.5px;">COLOR</button>
+    <button class = "encoding_select" id = "rgb" type="button" style="position: absolute; left: 10px;top: 292.5px;">RGB</button>
 
-<button class = "encoding_select highlight_encoding_select" id = "hex" type="button" style="position: absolute; left: 10px;top: 192.5px;">HEX</button>
-<button class = "encoding_select" id = "color" type="button" style="position: absolute; left: 10px;top: 242.5px;">COLOR</button>
-<button class = "encoding_select" id = "rgb" type="button" style="position: absolute; left: 10px;top: 292.5px;">RGB</button>
+    <div id = "stacked_colors" >
+        <span class="span_colors_stacked" id="box_one" style="width: 425px;"></span>
+    </div>
 
+    <textarea readonly ondrop = "onTextCanvasDrop(event)" ondragover="allowTextCanvasDrop(event)" class = "text_canvas" id = "clipboard_area"></textarea>
 
-<div>
-    <span class="span_colors_stacked" id="box_one" style="width: 425px;"></span>
-</div>
+    <br><br>
 
-<textarea readonly ondrop = "onTextCanvasDrop(event)" ondragover="allowTextCanvasDrop(event)" class = "text_canvas" id = "clipboard_area"></textarea>
+    <img class = "eraser" id = "eraser"  draggable="true" ondragstart="onEraserDrag(event)" src="eraser.png" alt="eraser" style="width:25;height:25px;margin-left:12px;">
+    <input style = "transform: rotate(90deg); position: absolute; left: 75px; top: 150px;" class = "colors" id = "color_wheel_input_one" type="color", value="#ff0000" draggable="true" ondragstart="onColorsDrag(event);">
+    <input style = "transform: rotate(90deg); position: absolute; left: 150px; top: 150px;" class = "colors" id = "color_wheel_input_two" type="color", value="#ffaa00" draggable="true" ondragstart="onColorsDrag(event);">
+    <input style = "transform: rotate(90deg); position: absolute; left: 225px; top: 150px;" class = "colors" id = "color_wheel_input_three" type="color", value="#ffff00" draggable="true" ondragstart="onColorsDrag(event);">
+    <input style = "transform: rotate(90deg); position: absolute; left: 300px; top: 150px;" class = "colors" id = "color_wheel_input_four" type="color", value="#00aa00" draggable="true" ondragstart="onColorsDrag(event);">
+    <input style = "transform: rotate(90deg); position: absolute; left: 375px; top: 150px;" class = "colors" id = "color_wheel_input_five" type="color", value="#0000ff" draggable="true" ondragstart="onColorsDrag(event);">
 
-<br><br>
+    <br>
+    <button style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 75px; top: 165px;" class = "add_color_button" id = "color_one_add" type="button">&#43;</button>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 65px; top: 190px;" class = "encoding_color_text_box" id = "color_one_hex">Text</textarea>
 
-<img class = "eraser" id = "eraser"  draggable="true" ondragstart="onEraserDrag(event)" src="eraser.png" alt="eraser" style="width:25;height:25px;margin-left:12px;">
-<input style = "transform: rotate(90deg); position: absolute; left: 75px; top: 150px;" class = "colors" id = "color_wheel_input_one" type="color", value="#ff0000" draggable="true" ondragstart="onColorsDrag(event);">
-<input style = "transform: rotate(90deg); position: absolute; left: 150px; top: 150px;" class = "colors" id = "color_wheel_input_two" type="color", value="#00ff00" draggable="true" ondragstart="onColorsDrag(event);">
-<input style = "transform: rotate(90deg); position: absolute; left: 225px; top: 150px;" class = "colors" id = "color_wheel_input_three" type="color", value="#0000ff" draggable="true" ondragstart="onColorsDrag(event);">
-<input style = "transform: rotate(90deg); position: absolute; left: 300px; top: 150px;" class = "colors" id = "color_wheel_input_four" type="color", value="#ffff00" draggable="true" ondragstart="onColorsDrag(event);">
-<input style = "transform: rotate(90deg); position: absolute; left: 375px; top: 150px;" class = "colors" id = "color_wheel_input_five" type="color", value="#ff00ff" draggable="true" ondragstart="onColorsDrag(event);">
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 65px;top: 240px;" class = "encoding_color_text_box" id = "color_one_color">Text</textarea>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 65px;top: 290px;" class = "encoding_color_text_box" id = "color_one_rgb">Text</textarea>
 
-<br>
-<button style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 75px; top: 165px;" class = "add_color_button" id = "color_one_add" type="button">&#43;</button>
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 65px; top: 190px;" class = "encoding_color_text_box" id = "color_one_hex">Text</textarea>
+    <br>
 
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 65px;top: 240px;" class = "encoding_color_text_box" id = "color_one_color">Text</textarea>
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 65px;top: 290px;" class = "encoding_color_text_box" id = "color_one_rgb">Text</textarea>
+    <button style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 150px; top: 165px;" class = "add_color_button" id = "color_two_add" type="button">&#43;</button>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 140px; top: 190px;" class = "encoding_color_text_box" id = "color_two_hex">Text</textarea>
 
-<br>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 140px;top: 240px;" class = "encoding_color_text_box" id = "color_two_color">Text</textarea>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 140px;top: 290px;" class = "encoding_color_text_box" id = "color_two_rgb">Text</textarea>
 
-<button style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 150px; top: 165px;" class = "add_color_button" id = "color_two_add" type="button">&#43;</button>
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 140px; top: 190px;" class = "encoding_color_text_box" id = "color_two_hex">Text</textarea>
+    <br>
 
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 140px;top: 240px;" class = "encoding_color_text_box" id = "color_two_color">Text</textarea>
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 140px;top: 290px;" class = "encoding_color_text_box" id = "color_two_rgb">Text</textarea>
+    <button  style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 225px; top: 165px;" class = "add_color_button" id = "color_three_add" type="button">&#43;</button>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 215px; top: 190px;" class = "encoding_color_text_box" id = "color_three_hex">Text</textarea>
 
-<br>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 215px;top: 240px;" class = "encoding_color_text_box" id = "color_three_color">Text</textarea>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 215px;top: 290px;" class = "encoding_color_text_box" id = "color_three_rgb">Text</textarea>
 
-<button  style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 225px; top: 165px;" class = "add_color_button" id = "color_three_add" type="button">&#43;</button>
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 215px; top: 190px;" class = "encoding_color_text_box" id = "color_three_hex">Text</textarea>
+    <br>
 
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 215px;top: 240px;" class = "encoding_color_text_box" id = "color_three_color">Text</textarea>
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 215px;top: 290px;" class = "encoding_color_text_box" id = "color_three_rgb">Text</textarea>
+    <button style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 300px; top: 165px;" class = "add_color_button" id = "color_four_add" type="button">&#43;</button>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 290px; top: 190px;" class = "encoding_color_text_box" id = "color_four_hex">Text</textarea>
 
-<br>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 290px; top: 240px;" class = "encoding_color_text_box" id = "color_four_color">Text</textarea>
+    <textarea  style = "border: 1px solid #5e4646;position: absolute; left: 290px; top: 290px;" class = "encoding_color_text_box" id = "color_four_rgb">Text</textarea>
 
-<button style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 300px; top: 165px;" class = "add_color_button" id = "color_four_add" type="button">&#43;</button>
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 290px; top: 190px;" class = "encoding_color_text_box" id = "color_four_hex">Text</textarea>
+    <br>
 
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 290px; top: 240px;" class = "encoding_color_text_box" id = "color_four_color">Text</textarea>
-<textarea  style = "border: 1px solid #5e4646;position: absolute; left: 290px; top: 290px;" class = "encoding_color_text_box" id = "color_four_rgb">Text</textarea>
+    <button style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 375px; top: 165px;" class = "add_color_button" id = color_five_add type="button">&#43;</button>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 365px; top: 190px;" class = "encoding_color_text_box" id = "color_five_hex">Text</textarea>
 
-<br>
+    <textarea style = "border: 1px solid #5e4646;position: absolute; left: 365px; top: 240px;" class = "encoding_color_text_box" id = "color_five_color">Text</textarea>
+    <textarea  style = "border: 1px solid #5e4646;position: absolute; left: 365px; top: 290px;" class = "encoding_color_text_box" id = "color_five_rgb">Text</textarea>
 
-<button style = "border-radius: 3px;border: .5px solid #292827;position: absolute; left: 375px; top: 165px;" class = "add_color_button" id = color_five_add type="button">&#43;</button>
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 365px; top: 190px;" class = "encoding_color_text_box" id = "color_five_hex">Text</textarea>
-
-<textarea style = "border: 1px solid #5e4646;position: absolute; left: 365px; top: 240px;" class = "encoding_color_text_box" id = "color_five_color">Text</textarea>
-<textarea  style = "border: 1px solid #5e4646;position: absolute; left: 365px; top: 290px;" class = "encoding_color_text_box" id = "color_five_rgb">Text</textarea>
-
-<br>
+    <br>
+</body>
 <script src="js/script.js"></script>

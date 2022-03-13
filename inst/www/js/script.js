@@ -205,6 +205,16 @@ document.getElementById("color_five_hex").value = color_wheel_input_five.value
 document.getElementById("color_five_rgb").value = singleElementConvertToRGB("HEX", color_wheel_input_five.value)
 document.getElementById("color_five_color").value = singleElementConvertToColor("HEX", color_wheel_input_five.value)
 
+// Adds a new color to bar on top of the widget.
+function addNewColorToBar(color) {
+    var stacked_colors = getElementById("stacked_colors")
+    const span = document.createElement("span");
+    span.setAttribute("")
+    span.setAttribute("") 
+    span.setAttribute("")
+    
+}
+
 /** START-ENCODING-BUTTONS **/
 
 // First color encoding button is HEX
